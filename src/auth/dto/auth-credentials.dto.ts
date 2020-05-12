@@ -1,4 +1,25 @@
+import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, IsOptional, ArrayContains } from 'class-validator';
+import { ROLE_USER } from 'src/contants';
 export class AuthCredentialsDto {
-    username: string;
+    @IsString()
+    @MinLength(8)
+    @MaxLength(20)
+    name: string;
+
+    @IsString()
+    @MinLength(8)
+    @MaxLength(20)
     password: string;
+
+    @MaxLength(100)
+    @IsOptional()
+    address: string;
+
+    @IsString()
+    @MaxLength(20)
+    identity: string;
+
+    @IsOptional()
+    @ArrayContains([ROLE_USER.NORMAL, ROLE_USER.ACCEPTER, ROLE_USER.ADMIN])
+    role: string;
 }
