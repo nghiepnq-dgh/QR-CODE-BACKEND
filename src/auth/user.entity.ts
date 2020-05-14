@@ -1,12 +1,17 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
-import { IsOptional, IsNotEmpty, ArrayContains } from "class-validator";
+import { IsOptional, IsNotEmpty, ArrayContains, IsEmail } from "class-validator";
 import { ROLE_USER } from "src/contants";
 import * as bcrypt from 'bcrypt';
 @Entity()
-@Unique(['identity'])
+@Unique(['identity', 'email'])
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @Column()
+    @IsNotEmpty()
+    @IsEmail()
+    email: String;
 
     @Column()
     name:string;

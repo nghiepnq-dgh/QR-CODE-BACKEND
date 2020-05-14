@@ -27,14 +27,20 @@ export class UserRepository extends Repository<User> {
     }
 
     //TODO REGISTER USER
-    async singUp(authCredentialsDto: AuthCredentialsDto): Promise<void> {
-        const { name, password, address, identity } = authCredentialsDto;
+    async singUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
+        const { name, password, address, identity, email } = authCredentialsDto;
 
         //Check duplicate indentity
-        const exits = await this.findOne({ identity })
-        if (exits) {
+        const exitsCmnd = await this.findOne({ identity })
+        if (exitsCmnd) {
             throw new BadRequestException("Chứng minh nhân dân không được trùng");
         }
+
+        const exitsEmail = await this.findOne({ email })
+        if (exitsEmail) {
+            throw new BadRequestException("Email không được trùng");
+        }
+
         const salt = await bcrypt.genSalt();
 
         const user = new User();
@@ -43,7 +49,9 @@ export class UserRepository extends Repository<User> {
         user.address = address;
         user.identity = identity;
         user.salt = salt;
+        user.email = email;
 
-        await user.save();
+        const result = await user.save();
+        return result;
     }
 }
