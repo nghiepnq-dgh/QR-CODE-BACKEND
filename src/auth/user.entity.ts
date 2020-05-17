@@ -1,7 +1,8 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Unique } from "typeorm";
+import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, Unique, OneToMany } from "typeorm";
 import { IsOptional, IsNotEmpty, ArrayContains, IsEmail } from "class-validator";
 import { ROLE_USER } from "src/contants";
 import * as bcrypt from 'bcrypt';
+import {FileDoc} from '../document/document.entity'
 @Entity()
 @Unique(['identity', 'email'])
 export class User extends BaseEntity {
@@ -33,6 +34,9 @@ export class User extends BaseEntity {
 
     @Column()
     salt: string;
+
+    @OneToMany(type => FileDoc, filedoc => filedoc.user)
+    documents: FileDoc[];
 
     async validdatePassword(password: string): Promise<boolean> {
         const hash = await bcrypt.hash(password, this.salt);
