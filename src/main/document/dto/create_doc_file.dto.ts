@@ -2,15 +2,12 @@ import { IsNotEmpty, IsEmail, Min, Max } from "class-validator";
 
 export class CreateDocFileDto {
     @IsNotEmpty()
-    contend: String;
+    contend: string;
 
     @IsNotEmpty()
-    @Min(8)
-    @Max(20)
-    identity: String;
+    identity: string;
 
     @IsNotEmpty()
     @IsEmail()
-    @Max(30)
-    email: String;
+    email: string;
 }

@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
-import { User } from "src/auth/user.entity";
+import { User } from "src/main/auth/user.entity";
 import { IsEmail } from "class-validator";
 
 @Entity()

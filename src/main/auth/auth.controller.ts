@@ -4,7 +4,7 @@ import { AuthService } from './auth.service';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
-import { GetUser } from '../decorator/get-user.decorator';
+import { GetUser } from '../../decorator/get-user.decorator';
 @Controller('auth')
 export class AuthController {
     constructor(

@@ -15,6 +15,11 @@ export class AuthService {
         private jwtService: JwtService,
     ) { }
 
+    async findUser(identity: string): Promise<User> {
+        const user = this.userRepository.findUserRepository(identity);
+        return user;
+    }
+
     async signUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
         return this.userRepository.singUp(authCredentialsDto);
     }
