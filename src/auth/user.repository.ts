@@ -20,7 +20,7 @@ export class UserRepository extends Repository<User> {
         if (!findUSer) {
            throw new BadRequestException("Ngươi dùng không tôn tại. Vui lòng đăng kí trước")
         } else if (await findUSer.validdatePassword(password)) {
-            return findUSer.name;
+            return findUSer.identity;
         } else {
             throw new BadRequestException("Mật khẩu không đúng. Vui lòng thử lại.");
         }

@@ -20,12 +20,12 @@ export class AuthService {
     }
 
     async signIn(authLoginDto: AuthLoginDto): Promise<{acccessToken: string}> {
-        const userName = await this.userRepository.validateUserPassword(authLoginDto);
-        if (!userName) {
+        const identity = await this.userRepository.validateUserPassword(authLoginDto);
+        if (!identity) {
             throw new UnauthorizedException("Sai tài khoản hoặc mật khẩu");
         }
 
-        const payload: JwtPayload = { userName };
+        const payload: JwtPayload = { identity };
         const acccessToken = await this.jwtService.sign(payload);
         return { acccessToken };
     }
