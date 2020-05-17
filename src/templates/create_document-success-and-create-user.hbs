@@ -361,14 +361,15 @@
 <body class="body">
   <p class="preheader">Tạo thành công hồ sơ</p>
   </br>
-  <p class="preheader">Bạn được cung cấp 1 tài khoản để sử dụng</p>
+  <p class="preheader">Hệ thống kiểm tra bạn chưa có tài khoản. Bạn được cung cấp 1 tài khoản để sử dụng</p>
   <p>Tài khoản: {{user_account}}</p>
   <p>Mật khẩu: {{user_pass}}</p>
   <div class="content">
     <button class="btn btn-primary">
-      <a href={{qr}} class="block">
+      {{!-- <a href={{qr}} class="block">
         Vào đay để quét mã 
-      </a>
+      </a> --}}
+      <canvas id="canvas">{{qr}}</canvas>
     </button>
   </div>
 

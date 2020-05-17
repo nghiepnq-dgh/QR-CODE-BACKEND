@@ -6,8 +6,8 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { AuthModule } from './main/auth/auth.module';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { DocumentModule } from './main/document/document.module';
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import * as path from 'path';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
@@ -18,17 +18,17 @@ import * as path from 'path';
       useFactory: () => ({
         // transport: 'smtps://user@domain.com:pass@smtp.domain.com',
         transport: {
-          host: 'gmail.com',
-          port: 587,
+          host: 'smtp.gmail.com',
+          port: 465,
           auth: {
-            user: "nghiepnguyen520@gmail.com",
-            pass: "0949589782",
+            user: "nghiepnq@digitechglobalco.com",
+            pass: "186597Cm",
           },
-          secure: false,
-          tls: { rejectUnauthorized: false },
+          // secure: false,
+          // tls: { rejectUnauthorized: false },
         },
         template: {
-          dir: path.resolve(__dirname, 'templates'),
+          dir: path.resolve(__dirname, 'templates'),          
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,
