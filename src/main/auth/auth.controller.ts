@@ -17,6 +17,12 @@ export class AuthController {
         return { success: true, result };
     }
 
+    @Post('/seed_user')
+    async seedUser() {
+        const result = await this.authService.seedUserServicer();
+        return {success: true, result};
+    }
+
     @Post('/signin')
     signIn(@Body(ValidationPipe) authLoginDto: AuthLoginDto): Promise<{ acccessToken: string }> {
         return this.authService.signIn(authLoginDto);
