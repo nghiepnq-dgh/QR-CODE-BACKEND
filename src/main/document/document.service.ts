@@ -107,4 +107,9 @@ export class DocumentService {
         );
         return result;
     }
+
+    async getDocByIdService(id: number) {
+        const result = await this.documentRepository.getDocByIdRepository(id);
+        return result;
+    }
 }
