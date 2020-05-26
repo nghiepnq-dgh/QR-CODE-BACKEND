@@ -25,7 +25,7 @@ export class AuthService {
         const result = await Promise.all(user_db.map(async item => {
             await this.signUp(item);
         }))
-        console.log("----",result);
+        return result;
     }
 
     async signUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
