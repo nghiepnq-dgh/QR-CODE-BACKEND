@@ -3,6 +3,7 @@ import { IsOptional, IsNotEmpty, ArrayContains, IsEmail } from "class-validator"
 import { ROLE_USER } from "src/contants";
 import * as bcrypt from 'bcrypt';
 import {FileDoc} from '../document/document.entity'
+import { History } from "../history/history.entity";
 @Entity()
 @Unique(['identity', 'email'])
 export class User extends BaseEntity {
@@ -37,6 +38,9 @@ export class User extends BaseEntity {
 
     @OneToMany(type => FileDoc, filedoc => filedoc.user)
     documents: FileDoc[];
+
+    @OneToMany(type => History, history => history.user)
+    historys: History[];
 
     async validdatePassword(password: string): Promise<boolean> {
         const hash = await bcrypt.hash(password, this.salt);

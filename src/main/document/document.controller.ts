@@ -41,13 +41,15 @@ export class DocumentController {
   @Get(':id')
   @UseGuards(AuthGuard())
   async getDocById(@GetUser() user: User, @Param('id') id: number) {
-    const result = await this.documentService.getDocByIdService(id);
+    const login = true;
+    const result = await this.documentService.getDocByIdService(id, login);
     return result;
   }
 
   @Get(':id/no_login')
   async getDocByIdNotLogin(@Param('id') id: number) {
-    const result = await this.documentService.getDocByIdService(id);
+    const login = false;
+    const result = await this.documentService.getDocByIdService(id, login);
     return result;
   }
 }

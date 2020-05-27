@@ -9,6 +9,8 @@ import { AuthCredentialsDto } from '../auth/dto/auth-credentials.dto';
 import passport = require('passport');
 import { User } from '../auth/user.entity';
 import { CreateQueryDto } from './dto/query_param.dto';
+import { History } from '../history/history.entity';
+import { HistoryRepository } from '../history/history.repository';
 
 @Injectable()
 export class DocumentService {
@@ -17,6 +19,7 @@ export class DocumentService {
     private documentRepository: DocumentRepository,
     private readonly mailerService: MailerService,
     private readonly userRepository: UserRepository,
+    private readonly historyRepository: HistoryRepository,
   ) {}
 
   async createDocService(createDocFileDto: CreateDocFileDto) {
@@ -106,8 +109,15 @@ export class DocumentService {
     return result;
   }
 
-  async getDocByIdService(id: number) {
+  async getDocByIdService(id: number, login: boolean) {
     const result = await this.documentRepository.getDocByIdRepository(id);
+    //If have login add history when search doc file
+    if (login) {
+      await this.historyRepository.save({
+        user: result.user,
+        document: result,
+      });
+    }
     return result;
   }
 }
