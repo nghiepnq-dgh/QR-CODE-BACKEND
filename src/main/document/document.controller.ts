@@ -44,4 +44,10 @@ export class DocumentController {
     const result = await this.documentService.getDocByIdService(id);
     return result;
   }
+
+  @Get(':id/no_login')
+  async getDocByIdNotLogin(@Param('id') id: number) {
+    const result = await this.documentService.getDocByIdService(id);
+    return result;
+  }
 }

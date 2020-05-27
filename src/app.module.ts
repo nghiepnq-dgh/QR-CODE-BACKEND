@@ -8,6 +8,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { DocumentModule } from './main/document/document.module';
 import * as path from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { HistoryModule } from './main/history/history.module';
 
 @Module({
   imports: [
@@ -21,8 +22,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
           host: 'smtp.gmail.com',
           port: 465,
           auth: {
-            user: "nghiepnq@digitechglobalco.com",
-            pass: "186597Cm",
+            user: "testqrtl@gmail.com",
+            pass: "01634490536",
           },
           // secure: false,
           // tls: { rejectUnauthorized: false },
@@ -36,6 +37,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
         },
       }),
     }),
+    HistoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
