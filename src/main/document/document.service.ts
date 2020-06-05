@@ -52,7 +52,7 @@ export class DocumentService {
 
     if (result) {
       //genertateQR code
-      const qrCode = await QRCode.toDataURL(`${user.id}`);
+      const qrCode = await QRCode.toDataURL(`${result.id}`);
 
       const valueTextEail = { qr: qrCode };
       if (!isUser) {
