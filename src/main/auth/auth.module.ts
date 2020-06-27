@@ -15,7 +15,7 @@ import { JwtStrategy } from './jwt.stratefy';
     JwtModule.register({
       secret: 'topSecert51',
       signOptions: {
-        expiresIn: 3600,
+        expiresIn: 3600000000000000000,
       },
     }),
     TypeOrmModule.forFeature([UserRepository]),

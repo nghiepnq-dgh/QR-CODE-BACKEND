@@ -6,11 +6,10 @@ import { CreateDocFileDto } from './dto/create_doc_file.dto';
 import { UserRepository } from '../auth/user.repository';
 import * as QRCode from 'qrcode';
 import { AuthCredentialsDto } from '../auth/dto/auth-credentials.dto';
-import passport = require('passport');
 import { User } from '../auth/user.entity';
 import { CreateQueryDto } from './dto/query_param.dto';
-import { History } from '../history/history.entity';
 import { HistoryRepository } from '../history/history.repository';
+import { UpdateStatusDocFileDto } from './dto/in_update_doc.dto';
 
 @Injectable()
 export class DocumentService {
@@ -118,6 +117,49 @@ export class DocumentService {
         document: result,
       });
     }
+    return result;
+  }
+
+  async updateStatusService(
+    id: number,
+    user: User,
+    data: UpdateStatusDocFileDto,
+  ) {
+    const { role } = user;
+    if (role === 'NORMAL')
+      throw new BadRequestException(
+        'Bạn không được quyền chỉnh sửa trạng thái',
+      );
+    const docFile = await this.documentRepository.findOne({
+      where: { id: id },
+    });
+    if (!docFile) throw new BadRequestException('Không tìm thấy hồ sơ');
+    docFile.status = data.status;
+    docFile.reason = data.reason;
+    const result = await this.documentRepository.save(docFile);
+    this.mailerService
+      .sendMail({
+        to: `${docFile.user.email}`, // list of receivers
+        from: 'testqrtl@gmail.com', // sender address
+        subject: 'Hồ sơ đã đưọc cập nhập trạng thái!', // Subject line
+        html: `<h1>Cập nhâp thông tin hồ sơ</h2>
+                <br/>
+                <p>Tài khoản: ${user.identity}</p>
+                <p>Mã hồ sơ: ${result.id} </p>
+                <p>Hồ sơ của bạn đã được cập nhập thành ${result.status}</p>
+                <br/>
+                <p>Với lời nhắn: ${result.reason}</p>
+                <i>Vui lòng vào app để biết thêm thông tin</i>
+                <br/>
+                <h4>Xin cảm ơn</h4>
+                `,
+      })
+      .then(value => {
+        console.log(value);
+      })
+      .catch(e => {
+        console.log('Send mail error', e);
+      });
     return result;
   }
 }
