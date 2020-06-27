@@ -34,7 +34,6 @@ export class DocumentService {
         );
       }
     }
-  
 
     //Check if dont have user then create user
     if (!user) {
@@ -67,12 +66,6 @@ export class DocumentService {
           to: email, // list of receivers
           from: 'testqrtl@gmail.com', // sender address
           subject: 'Tạo hồ sơ thành công!', // Subject line
-          // template: isUser ? 'create-document-success' : 'create-document-success-and-create-user',
-          // template:  'create_document_success',
-          // context: {
-          //     ...valueTextEail
-          // },
-          // text: "Hello world?", // plain text body
           html: isUser
             ? `<h1>Tao hồ sơ thành công </h2>
                 <br/>

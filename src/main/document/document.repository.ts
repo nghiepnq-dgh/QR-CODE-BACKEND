@@ -12,7 +12,7 @@ export class DocumentRepository extends Repository<FileDoc> {
     createDocFileDto: CreateDocFileDto,
     user: User,
   ) {
-    const { contend  } = createDocFileDto;
+    const { contend } = createDocFileDto;
     const document = new FileDoc();
     document.user = user;
     document.contend = contend;
@@ -32,27 +32,20 @@ export class DocumentRepository extends Repository<FileDoc> {
     const _limit = limit ? limit : 10;
     const _page = page ? page : 1;
 
-    const options: FindManyOptions = {
-      where: {},
-      relations: ['user']
-    }
-
-    if (page) {
-      options['skip'] = (+_page - 1) * +_limit;
-      options['take'] = +_limit;
-    }
+    let qb = this.createQueryBuilder('file_doc')
+      .leftJoinAndSelect('file_doc.user', 'user')
+      .skip((_page - 1) * _limit)
+      .take(_limit);
 
     if (role === ROLE_USER.NORMAL) {
-      options.where['userId'] = id;
+      qb = qb.andWhere('user.id= :id', { id });
     }
 
     if (documentId) {
-      options.where['id'] = documentId;
+      qb = qb.andWhere('file_doc.id= :documentId', { documentId });
     }
-
-    console.log("DEBUG_CODE: DocumentRepository ->ß getAllDocRepository -> options", options);
-    const result = await this.findAndCount(options);
-
+    
+    const result = await qb.getManyAndCount();
     return result;
   }
 

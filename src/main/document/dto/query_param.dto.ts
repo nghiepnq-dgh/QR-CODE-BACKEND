@@ -7,7 +7,7 @@ export class CreateQueryDto {
     page: number = 1;
 
     @IsOptional()
-    limit: number = 10;
+    limit: number = 20;
 
     @IsOptional()
     document_id: string;
