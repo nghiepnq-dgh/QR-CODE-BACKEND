@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsEmail, Min, Max } from "class-validator";
+import { IsNotEmpty, IsEmail } from "class-validator";
 
 export class CreateDocFileDto {
     @IsNotEmpty()

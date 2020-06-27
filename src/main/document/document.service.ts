@@ -27,11 +27,14 @@ export class DocumentService {
     const { identity, email } = createDocFileDto;
     user = await this.userRepository.findUserRepository(identity);
 
-    if (user && email === user.email) {
-      throw new BadRequestException(
-        `Email ${email} đã được sử dụng cho tài khoản khác, Vui lòng nhập email khác.`,
-      );
+    if (user) {
+      if (user && email === user.email && identity !== user.identity) {
+        throw new BadRequestException(
+          `Email ${email} đã được sử dụng cho tài khoản khác, Vui lòng nhập email khác.`,
+        );
+      }
     }
+  
 
     //Check if dont have user then create user
     if (!user) {

@@ -1,21 +1,22 @@
-import { Repository, EntityRepository } from 'typeorm';
+import { Repository, EntityRepository, FindManyOptions } from 'typeorm';
 import { FileDoc } from './document.entity';
 import { User } from '../auth/user.entity';
 import { CreateDocFileDto } from './dto/create_doc_file.dto';
 import { CreateQueryDto } from './dto/query_param.dto';
 import { ROLE_USER } from 'src/contants';
 import { BadRequestException } from '@nestjs/common';
-
+import { random } from '@supercharge/strings';
 @EntityRepository(FileDoc)
 export class DocumentRepository extends Repository<FileDoc> {
   async createDocumentRepository(
     createDocFileDto: CreateDocFileDto,
     user: User,
   ) {
-    const { email, contend, identity } = createDocFileDto;
+    const { contend  } = createDocFileDto;
     const document = new FileDoc();
     document.user = user;
     document.contend = contend;
+    document.id = random(6).toLowerCase();
     //save document
     console.log('document', document);
 
@@ -28,27 +29,29 @@ export class DocumentRepository extends Repository<FileDoc> {
   async getAllDocRepository(user: User, createQueryDto: CreateQueryDto) {
     const { role, id } = user;
     const { limit, page, document_id: documentId } = createQueryDto;
-
     const _limit = limit ? limit : 10;
-    const where = {
-      relations: ['user'],
-    };
+    const _page = page ? page : 1;
+
+    const options: FindManyOptions = {
+      where: {},
+      relations: ['user']
+    }
 
     if (page) {
-      where['skip'] = (+page - 1) * +_limit;
-      where['take'] = +_limit;
+      options['skip'] = (+_page - 1) * +_limit;
+      options['take'] = +_limit;
     }
 
     if (role === ROLE_USER.NORMAL) {
-      where['userId'] = id;
+      options.where['userId'] = id;
     }
 
     if (documentId) {
-      where['id'] = documentId;
+      options.where['id'] = documentId;
     }
-    const result = await this.findAndCount({
-      ...where,
-    });
+
+    console.log("DEBUG_CODE: DocumentRepository ->ß getAllDocRepository -> options", options);
+    const result = await this.findAndCount(options);
 
     return result;
   }

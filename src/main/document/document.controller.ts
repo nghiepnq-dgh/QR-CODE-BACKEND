@@ -35,7 +35,7 @@ export class DocumentController {
   async getAllDoc(
     @GetUser() user: User,
     @Query(ValidationPipe) createQueryDto: CreateQueryDto,
-  ) {
+    ) {
     const result = await this.documentService.getAllDoc(user, createQueryDto);
     return { data: result[0], total: result[1] };
   }

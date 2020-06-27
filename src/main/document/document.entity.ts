@@ -1,10 +1,11 @@
-import { BaseEntity, Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from "typeorm";
+import { BaseEntity, Entity, Column, ManyToOne, OneToMany, PrimaryColumn } from "typeorm";
 import { User } from "src/main/auth/user.entity";
 import { History } from "../history/history.entity";
 import { STATUS_DOC } from "src/common/status_doc";
 @Entity()
 export class FileDoc extends BaseEntity {
-    @PrimaryGeneratedColumn("uuid")
+    @Column()
+    @PrimaryColumn()
     id: string;
 
     @Column({ type: 'text' })
