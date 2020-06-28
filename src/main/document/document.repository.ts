@@ -1,4 +1,4 @@
-import { Repository, EntityRepository, FindManyOptions } from 'typeorm';
+import { Repository, EntityRepository } from 'typeorm';
 import { FileDoc } from './document.entity';
 import { User } from '../auth/user.entity';
 import { CreateDocFileDto } from './dto/create_doc_file.dto';

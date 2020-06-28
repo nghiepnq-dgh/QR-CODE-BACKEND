@@ -122,13 +122,16 @@ export class DocumentService {
     data: UpdateStatusDocFileDto,
   ) {
     const { role } = user;
+    console.log("DEBUG_CODE: DocumentService -> role", role);
     if (role === 'NORMAL')
       throw new BadRequestException(
         'Bạn không được quyền chỉnh sửa trạng thái',
       );
     const docFile = await this.documentRepository.findOne({
       where: { id: id },
+      relations: ['user']
     });
+    console.log("DEBUG_CODE: DocumentService -> docFile", docFile);
     if (!docFile) throw new BadRequestException('Không tìm thấy hồ sơ');
     docFile.status = data.status;
     docFile.reason = data.reason;

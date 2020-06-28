@@ -33,7 +33,7 @@ export class UserRepository extends Repository<User> {
 
     //TODO REGISTER USER
     async singUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {
-        const { name, password, address, identity, email } = authCredentialsDto;
+        const { name, password, address, identity, email, role } = authCredentialsDto;
 
         //Check duplicate indentity
         const exitsCmnd = await this.findOne({ identity })
@@ -55,6 +55,7 @@ export class UserRepository extends Repository<User> {
         user.identity = identity;
         user.salt = salt;
         user.email = email;
+        user.role = role;
 
         const result = await user.save();
         return result;
