@@ -9,6 +9,7 @@ import { JwtPayload } from './interface/jwt-payload.interface';
 import { userDb } from '../seed/user_db_seed';
 import { RoomRepository } from '../room/room.repository';
 import { roomDb } from '../seed/room';
+import { ChangePassDto } from './dto/change-password.dto';
 
 @Injectable()
 export class AuthService {
@@ -51,5 +52,9 @@ export class AuthService {
         const payload: JwtPayload = { identity };
         const acccessToken = await this.jwtService.sign(payload);
         return { acccessToken };
+    }
+
+    async changePassword(data: ChangePassDto, user: User) {
+        return this.userRepository.changePass(data, user);
     }
 }

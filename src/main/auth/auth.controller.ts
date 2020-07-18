@@ -4,8 +4,6 @@ import {
     Body,
     ValidationPipe,
     UseGuards,
-    Req,
-    Request,
 } from '@nestjs/common';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { AuthService } from './auth.service';
@@ -13,6 +11,7 @@ import { AuthLoginDto } from './dto/auth-login.dto';
 import { User } from './user.entity';
 import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from '../../decorator/get-user.decorator';
+import { ChangePassDto } from './dto/change-password.dto';
 @Controller('auth')
 export class AuthController {
     constructor(private authService: AuthService) {}
@@ -21,6 +20,13 @@ export class AuthController {
     async signUp(@Body(ValidationPipe) authCredentialsDto: AuthCredentialsDto) {
         const result = await this.authService.signUp(authCredentialsDto);
         return { success: true, result };
+    }
+
+    @Post('/change-password')
+    @UseGuards(AuthGuard())
+    async changePassword(@GetUser() user: User, @Body(ValidationPipe) dto: ChangePassDto) {
+        const result = await this.authService.changePassword(dto, user);
+        return result;
     }
 
     @Post('/seed_user')
@@ -33,7 +39,6 @@ export class AuthController {
         const result = await this.authService.seedRoom();
         return { success: true, result };
     }
-
 
     @Post('/signin')
     async signIn(@Body(ValidationPipe) authLoginDto: AuthLoginDto) {

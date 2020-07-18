@@ -1,5 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, MaxLength, IsOptional, ArrayContains } from 'class-validator';
-import { ROLE_USER } from 'src/contants';
+import { IsString, MinLength, MaxLength  } from 'class-validator';
 export class AuthLoginDto {
     @IsString()
     @MaxLength(20)
