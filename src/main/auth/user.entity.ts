@@ -13,7 +13,7 @@ export class User extends BaseEntity {
     @Column()
     @IsNotEmpty()
     @IsEmail()
-    email: String;
+    email: string;
 
     @Column()
     name:string;

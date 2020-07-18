@@ -3,7 +3,6 @@ import { User } from './user.entity';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import * as bcrypt from 'bcrypt';
 import { BadRequestException } from '@nestjs/common';
-import { userInfo } from 'os';
 import { AuthLoginDto } from './dto/auth-login.dto';
 
 @EntityRepository(User)

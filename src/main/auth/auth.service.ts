@@ -6,12 +6,14 @@ import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from './interface/jwt-payload.interface';
-import { user_db } from '../seed/user_db_seed';
+import { userDb } from '../seed/user_db_seed';
+import { RoomRepository } from '../room/room.repository';
+import { roomDb } from '../seed/room';
 
 @Injectable()
 export class AuthService {
     constructor(
-        @InjectRepository(UserRepository)
+        private roomRepository: RoomRepository,
         private userRepository: UserRepository,
         private jwtService: JwtService,
     ) { }
@@ -22,10 +24,18 @@ export class AuthService {
     }
 
     async seedUserServicer() {
-        const result = await Promise.all(user_db.map(async item => {
+        const result = await Promise.all(userDb.map(async item => {
             await this.signUp(item);
         }))
         return result;
+    }
+
+    async seedRoom() {
+        const room = await Promise.all(roomDb.map(async item => {
+            await this.roomRepository.save(item);
+        }))
+
+        return room; 
     }
 
     async signUp(authCredentialsDto: AuthCredentialsDto): Promise<User> {

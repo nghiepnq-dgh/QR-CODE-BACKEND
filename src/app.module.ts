@@ -9,12 +9,14 @@ import { DocumentModule } from './main/document/document.module';
 import * as path from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { HistoryModule } from './main/history/history.module';
+import { RoomModule } from './main/room/room.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(typeOrmConfig),
     AuthModule,
     DocumentModule,
+    RoomModule,
     MailerModule.forRootAsync({
       useFactory: () => ({
         // transport: 'smtps://user@domain.com:pass@smtp.domain.com',

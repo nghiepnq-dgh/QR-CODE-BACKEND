@@ -1,6 +1,6 @@
 import { ROLE_USER } from "src/contants";
 
-export const user_db = [
+export const userDb = [
     {
         name: "admin",
         email: "admin@gmail.com",

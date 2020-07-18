@@ -28,6 +28,12 @@ export class AuthController {
         const result = await this.authService.seedUserServicer();
         return { success: true, result };
     }
+    @Post('/seed_room')
+    async seedRoom() {
+        const result = await this.authService.seedRoom();
+        return { success: true, result };
+    }
+
 
     @Post('/signin')
     async signIn(@Body(ValidationPipe) authLoginDto: AuthLoginDto) {
