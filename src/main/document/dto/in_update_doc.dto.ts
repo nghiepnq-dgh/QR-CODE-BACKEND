@@ -7,4 +7,7 @@ export class UpdateStatusDocFileDto {
 
     @IsOptional()
     reason: string;
+
+    @IsOptional()
+    room: string;
 }

@@ -25,7 +25,7 @@ export class FileDoc extends BaseEntity {
   reason: string;
 
   @Column({ nullable: true })
-  location: string;
+  room: string;
 
   @ManyToOne(
     type => User,

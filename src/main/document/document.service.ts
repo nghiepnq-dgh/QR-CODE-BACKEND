@@ -135,6 +135,7 @@ export class DocumentService {
     if (!docFile) throw new BadRequestException('Không tìm thấy hồ sơ');
     docFile.status = data.status;
     docFile.reason = data.reason;
+    docFile.room = data.room;
     const result = await this.documentRepository.save(docFile);
     this.mailerService
       .sendMail({
