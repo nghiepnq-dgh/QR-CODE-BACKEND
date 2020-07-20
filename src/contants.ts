@@ -3,5 +3,5 @@ export enum ROLE_USER  {
 }
 
 export enum TYPE_ROOM {
-    DIACHINH = "DIACHINH", CONGCHUNG="CONGCHUNG", DANSU="DANSU"
+    DIACHINH = "Địa chính", CONGCHUNG="Công chứng", DANSU="Dân sự"
 }

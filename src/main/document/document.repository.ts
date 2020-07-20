@@ -3,7 +3,7 @@ import { FileDoc } from './document.entity';
 import { User } from '../auth/user.entity';
 import { CreateDocFileDto } from './dto/create_doc_file.dto';
 import { CreateQueryDto } from './dto/query_param.dto';
-import { ROLE_USER } from 'src/contants';
+import { ROLE_USER, TYPE_ROOM } from 'src/contants';
 import { BadRequestException } from '@nestjs/common';
 import { random } from '@supercharge/strings';
 @EntityRepository(FileDoc)
@@ -16,6 +16,7 @@ export class DocumentRepository extends Repository<FileDoc> {
     const document = new FileDoc();
     document.user = user;
     document.contend = contend;
+    document.room = TYPE_ROOM.CONGCHUNG;
     document.id = random(6).toLowerCase();
     //save document
     console.log('document', document);
