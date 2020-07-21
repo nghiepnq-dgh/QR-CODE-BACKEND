@@ -26,7 +26,7 @@ export class AuthController {
     @UseGuards(AuthGuard())
     async changePassword(@GetUser() user: User, @Body(ValidationPipe) dto: ChangePassDto) {
         const result = await this.authService.changePassword(dto, user);
-        return result;
+        return {success: true, result};
     }
 
     @Post('/seed_user')
