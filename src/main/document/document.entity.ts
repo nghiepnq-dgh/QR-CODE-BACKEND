@@ -5,10 +5,12 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryColumn,
+  ManyToMany,
 } from 'typeorm';
 import { User } from 'src/main/auth/user.entity';
 import { History } from '../history/history.entity';
 import { STATUS_DOC } from 'src/common/status_doc';
+import { Room } from '../room/room.entity';
 @Entity()
 export class FileDoc extends BaseEntity {
   @Column()
@@ -24,8 +26,8 @@ export class FileDoc extends BaseEntity {
   @Column({ nullable: true })
   reason: string;
 
-  @Column({ nullable: true })
-  room: string;
+  @ManyToMany(type => Room, room => room.documents)
+  rooms: Room[];
 
   @ManyToOne(
     type => User,

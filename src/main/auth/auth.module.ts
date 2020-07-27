@@ -16,7 +16,7 @@ import { RoomRepository } from '../room/room.repository';
     JwtModule.register({
       secret: 'topSecert51',
       signOptions: {
-        expiresIn: 3600000000000000000,
+        expiresIn: 36000000000000000000000000,
       },
     }),
     TypeOrmModule.forFeature([UserRepository, RoomRepository]),

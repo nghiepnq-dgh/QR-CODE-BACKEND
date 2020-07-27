@@ -6,6 +6,7 @@ import { DocumentRepository } from './document.repository';
 import { UserRepository } from '../auth/user.repository';
 import { PassportModule } from '@nestjs/passport';
 import { HistoryRepository } from '../history/history.repository';
+import { RoomRepository } from '../room/room.repository';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { HistoryRepository } from '../history/history.repository';
       DocumentRepository,
       UserRepository,
       HistoryRepository,
+      RoomRepository,
     ]),
     PassportModule.register({
       defaultStrategy: 'jwt',

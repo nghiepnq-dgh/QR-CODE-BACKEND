@@ -10,6 +10,8 @@ import { User } from '../auth/user.entity';
 import { CreateQueryDto } from './dto/query_param.dto';
 import { HistoryRepository } from '../history/history.repository';
 import { UpdateStatusDocFileDto } from './dto/in_update_doc.dto';
+import { RoomRepository } from '../room/room.repository';
+import { TYPE_ROOM } from 'src/contants';
 
 @Injectable()
 export class DocumentService {
@@ -19,6 +21,7 @@ export class DocumentService {
     private readonly mailerService: MailerService,
     private readonly userRepository: UserRepository,
     private readonly historyRepository: HistoryRepository,
+    private readonly roomRepository: RoomRepository,
   ) {}
 
   async createDocService(createDocFileDto: CreateDocFileDto) {
@@ -46,9 +49,11 @@ export class DocumentService {
       userDto.address = '';
       user = await this.userRepository.singUp(userDto);
     }
+    const room = await this.roomRepository.findOne({where: {type: TYPE_ROOM.CONGCHUNG}})
     const result = await this.documentRepository.createDocumentRepository(
       createDocFileDto,
       user,
+      room,
     );
 
     if (result) {
@@ -122,7 +127,6 @@ export class DocumentService {
     data: UpdateStatusDocFileDto,
   ) {
     const { role } = user;
-    console.log("DEBUG_CODE: DocumentService -> role", role);
     if (role === 'NORMAL')
       throw new BadRequestException(
         'Bạn không được quyền chỉnh sửa trạng thái',
@@ -131,11 +135,11 @@ export class DocumentService {
       where: { id: id },
       relations: ['user']
     });
-    console.log("DEBUG_CODE: DocumentService -> docFile", docFile);
     if (!docFile) throw new BadRequestException('Không tìm thấy hồ sơ');
+    const room = await this.roomRepository.findOne({where: {type: data.room}})
     docFile.status = data.status;
     docFile.reason = data.reason;
-    docFile.room = data.room;
+    docFile.rooms = [room];
     const result = await this.documentRepository.save(docFile);
     this.mailerService
       .sendMail({
